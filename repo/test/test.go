@@ -38,6 +38,7 @@ const (
 //
 // Recommend use go:embed to read DDL from SQL file
 func SetupLocalDatabaseConnection(t *testing.T, tableName, ddl string) (db *gorm.DB, postSetup func()) {
+	// Go 1.21 enabled, if your go version is below 1.21, delete this block
 	if !testing.Testing() {
 		log.Fatalln("don't call this function in non-test mode")
 	}

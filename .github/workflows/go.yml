@@ -12,6 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3306
+        container port: 3306
+        mysql version: '8.0'
+        mysql database: 'test'
+        mysql root password: '123456'
+
     - uses: actions/checkout@v3
 
     - name: Set up Go
@@ -22,13 +30,10 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - uses: mirromutth/mysql-action@v1.1
+    - name: Sleep for 2s
+      uses: juliangruber/sleep-action@v2.0.0
       with:
-        host port: 3306
-        container port: 3306
-        mysql version: '8.0'
-        mysql database: 'test'
-        mysql root password: '123456'
+        time: 2s
 
     - name: Test
       run: USE_LOCAL_DATABASE_MYSQL_FOR_DAO_UNIT_TEST=1 go test -v ./...

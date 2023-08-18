@@ -9,12 +9,13 @@ import (
 	"gorm.io/gorm"
 
 	"gorm-unit-test-demo/repo/test"
+	"gorm-unit-test-demo/repo/user"
 )
 
 func TestRepo_Get(t *testing.T) {
 	a := require.New(t)
 
-	db, postSetup := test.SetupLocalDatabaseConnection(t, User{}.TableName())
+	db, postSetup := test.SetupLocalDatabaseConnection(t, user.User{}.TableName())
 	defer postSetup()
 
 	a.NoError(db.Exec("INSERT INTO `user`(`name`, `age`) VALUES ('Tony', 18)").Error)
@@ -31,15 +32,15 @@ func TestRepo_Get(t *testing.T) {
 		name    string
 		fields  fields
 		args    args
-		want    User
+		want    user.User
 		wantErr bool
 	}{
-		{"Got", fields{db}, args{1}, User{1, "Tony", 18}, false},
-		{"Err", fields{db}, args{4}, User{0, "", 0}, true},
+		{"Got", fields{db}, args{1}, user.User{1, "Tony", 18}, false},
+		{"Err", fields{db}, args{4}, user.User{0, "", 0}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := &Repo{
+			r := &user.Repo{
 				DB: tt.fields.db,
 			}
 			got, err := r.Get(tt.args.userID)

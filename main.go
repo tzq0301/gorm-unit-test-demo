@@ -8,5 +8,5 @@ import (
 
 func main() {
 	t := testing.T{}
-	test.SetupLocalDatabaseConnection(&t, "", "")
+	test.SetupLocalDatabaseConnection(&t, "")
 }

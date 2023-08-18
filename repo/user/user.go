@@ -13,13 +13,13 @@ func (User) TableName() string {
 }
 
 type Repo struct {
-	db *gorm.DB
+	DB *gorm.DB
 }
 
 func (r *Repo) Get(userID int) (User, error) {
 	var u User
 
-	err := r.db.Debug().
+	err := r.DB.Debug().
 		Model(&User{}).
 		Where("id = ?", userID).
 		First(&u).Error
